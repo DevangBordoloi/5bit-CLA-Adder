@@ -1,0 +1,125 @@
+$date
+	Tue Dec 02 12:55:13 2025
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1ps
+$end
+$scope module cla_adder_tb $end
+$var wire 5 ! sum [4:0] $end
+$var wire 1 " cout $end
+$var reg 5 # a [4:0] $end
+$var reg 5 $ b [4:0] $end
+$var reg 1 % clk $end
+$scope module uut $end
+$var wire 5 & a [4:0] $end
+$var wire 5 ' b [4:0] $end
+$var wire 1 % clk $end
+$var wire 5 ( g [4:0] $end
+$var wire 5 ) p [4:0] $end
+$var wire 5 * sum_wire [4:0] $end
+$var wire 6 + c [5:0] $end
+$var reg 5 , a_reg [4:0] $end
+$var reg 5 - b_reg [4:0] $end
+$var reg 1 " cout $end
+$var reg 5 . sum [4:0] $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+$comment Show the parameter values. $end
+$dumpall
+$end
+#0
+$dumpvars
+bx .
+bx -
+bx ,
+bx0 +
+bx *
+bx )
+bx (
+b0 '
+b0 &
+0%
+b0 $
+b0 #
+x"
+bx !
+$end
+#5000
+b0 +
+b0 *
+b0 (
+b0 )
+b0 -
+b0 ,
+1%
+#10000
+0%
+#15000
+0"
+b0 !
+b0 .
+1%
+#20000
+0%
+b11 $
+b11 '
+b101 #
+b101 &
+#25000
+b1110 +
+b1000 *
+b1 (
+b110 )
+b11 -
+b101 ,
+1%
+#30000
+0%
+b1 $
+b1 '
+b1111 #
+b1111 &
+#35000
+b11110 +
+b10000 *
+b1110 )
+b1000 !
+b1000 .
+b1 -
+b1111 ,
+1%
+#40000
+0%
+b11111 #
+b11111 &
+#45000
+b111110 +
+b0 *
+b11110 )
+b11111 ,
+b10000 !
+b10000 .
+1%
+#50000
+0%
+b1011 $
+b1011 '
+b10101 #
+b10101 &
+#55000
+1"
+b0 !
+b0 .
+b1011 -
+b10101 ,
+1%
+#60000
+0%
+#65000
+1%
+#70000
+0%
