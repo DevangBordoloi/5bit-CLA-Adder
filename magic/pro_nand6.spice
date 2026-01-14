@@ -1,0 +1,59 @@
+* SPICE3 file created from pro_nand6.ext - technology: scmos
+
+.option scale=90n
+
+M1000 Y C vdd vdd CMOSP w=20u l=0.18u
++  ad=60p pd=26u as=60p ps=26u
+M1001 a_39_n103# E a_31_n103# Gnd CMOSN w=60u l=0.18u
++  ad=0.18n pd=66u as=0.18n ps=66u
+M1002 Y E vdd vdd CMOSP w=20u l=0.18u
++  ad=60p pd=26u as=60p ps=26u
+M1003 a_47_n103# F a_39_n103# Gnd CMOSN w=60u l=0.18u
++  ad=0.3n pd=0.13m as=0.18n ps=66u
+M1004 vdd B Y vdd CMOSP w=20u l=0.18u
++  ad=60p pd=26u as=60p ps=26u
+M1005 Y A vdd vdd CMOSP w=20u l=0.18u
++  ad=60p pd=26u as=100p ps=50u
+M1006 vdd D Y vdd CMOSP w=20u l=0.18u
++  ad=60p pd=26u as=60p ps=26u
+M1007 a_15_n103# B a_7_n103# Gnd CMOSN w=60u l=0.18u
++  ad=0.18n pd=66u as=0.18n ps=66u
+M1008 vdd F Y vdd CMOSP w=20u l=0.18u
++  ad=100p pd=50u as=60p ps=26u
+M1009 a_7_n103# A Y Gnd CMOSN w=60u l=0.18u
++  ad=0.18n pd=66u as=0.3n ps=0.13m
+M1010 a_31_n103# D a_23_n103# Gnd CMOSN w=60u l=0.18u
++  ad=0.18n pd=66u as=0.18n ps=66u
+M1011 a_23_n103# C a_15_n103# Gnd CMOSN w=60u l=0.18u
++  ad=0.18n pd=66u as=0.18n ps=66u
+C0 Y a_31_n103# 0.04128f
+C1 a_15_n103# a_23_n103# 0.61857f
+C2 Y a_39_n103# 0.04128f
+C3 D E 0.34207f
+C4 D vdd 0.03475f
+C5 E vdd 0.03475f
+C6 F a_47_n103# 0.00218f
+C7 a_23_n103# a_31_n103# 0.61857f
+C8 D Y 0.01592f
+C9 E F 0.34207f
+C10 F vdd 0.03548f
+C11 vdd A 0.03548f
+C12 Y a_47_n103# 0.04126f
+C13 E Y 0.01592f
+C14 Y vdd 1.28437f
+C15 D C 0.34207f
+C16 vdd B 0.03475f
+C17 a_31_n103# a_39_n103# 0.61857f
+C18 F Y 0.01592f
+C19 Y A 0.01721f
+C20 A B 0.34207f
+C21 vdd C 0.03475f
+C22 Y B 0.01592f
+C23 Y a_7_n103# 0.65985f
+C24 Y C 0.01592f
+C25 B C 0.34207f
+C26 Y a_15_n103# 0.04128f
+C27 a_39_n103# a_47_n103# 0.61857f
+C28 a_7_n103# a_15_n103# 0.61857f
+C29 Y a_23_n103# 0.04128f
+

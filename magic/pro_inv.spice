@@ -1,0 +1,17 @@
+* SPICE3 file created from pro_inv.ext - technology: scmos
+
+.option scale=90n
+
+M1000 y x gnd Gnd CMOSN w=10u l=2u
++  ad=60p pd=32u as=60p ps=32u
+M1001 y x vdd w_n10_n7# CMOSP w=20u l=2u
++  ad=0.105n pd=52u as=0.105n ps=52u
+C0 w_n10_n7# y 0.00799f
+C1 w_n10_n7# x 0.01907f
+C2 vdd y 0.2165f
+C3 vdd x 0.02445f
+C4 w_n10_n7# vdd 0.00973f
+C5 gnd y 0.13612f
+C6 gnd x 0.04279f
+C7 x y 0.05898f
+

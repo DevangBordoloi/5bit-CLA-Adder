@@ -1,0 +1,56 @@
+* SPICE3 file created from pro_xor2.ext - technology: scmos
+
+.option scale=90n
+
+M1000 a_23_0# a_20_n75# Y vdd pfet w=40 l=2
++  ad=0.12n pd=46u as=0.12n ps=46u
+M1001 a_20_n75# A gnd Gnd nfet w=10 l=2
++  ad=60p pd=32u as=60p ps=32u
+M1002 vdd B gnd Gnd nfet w=10 l=2
++  ad=60p pd=32u as=60p ps=32u
+M1003 a_23_n49# a_20_n75# gnd Gnd nfet w=20 l=2
++  ad=60p pd=26u as=60p ps=26u
+M1004 Y B a_7_0# vdd pfet w=40 l=2
++  ad=0.12n pd=46u as=0.12n ps=46u
+M1005 a_7_0# A vdd vdd pfet w=40 l=2
++  ad=0.12n pd=46u as=0.2n ps=90u
+M1006 vdd vdd a_23_0# vdd pfet w=40 l=2
++  ad=0.2n pd=90u as=0.12n ps=46u
+M1007 Y vdd a_23_n49# Gnd nfet w=20 l=2
++  ad=100p pd=50u as=60p ps=26u
+M1008 a_7_n49# A Y Gnd nfet w=20 l=2
++  ad=60p pd=26u as=100p ps=50u
+** SOURCE/DRAIN TIED
+M1009 vdd B vdd w_76_n136# pfet w=21 l=2
++  ad=0.105n pd=52u as=0.715n ps=0.336m
+M1010 gnd B a_7_n49# Gnd nfet w=20 l=2
++  ad=60p pd=26u as=60p ps=26u
+M1011 a_20_n75# A vdd w_8_n139# pfet w=21 l=2
++  ad=0.105n pd=52u as=0.105n ps=52u
+C0 a_20_n75# vdd 0.76662f
+C1 B w_76_n136# 0.0191f
+C2 a_20_n75# w_8_n139# 0.00815f
+C3 B gnd 0.04651f
+C4 B A 0.41597f
+C5 Y vdd 0.01971f
+C6 a_20_n75# gnd 0.1734f
+C7 a_20_n75# A 0.0591f
+C8 vdd w_8_n139# 0.00999f
+C9 vdd w_76_n136# 0.01747f
+C10 gnd vdd 0.22971f
+C11 Y A 0.0097f
+C12 vdd A 0.11025f
+C13 B a_20_n75# 0.96795f
+C14 w_8_n139# A 0.0191f
+C15 gnd A 0.04279f
+C16 B Y 0.01156f
+C17 B vdd 0.30531f
+C18 a_20_n75# Y 0.01156f
+C19 gnd 0 1.56166f **FLOATING
+C20 Y 0 0.40495f **FLOATING
+C21 a_20_n75# 0 0.46411f **FLOATING
+C22 B 0 0.86082f **FLOATING
+C23 A 0 0.74719f **FLOATING
+C24 w_76_n136# 0 0.95619f **FLOATING
+C25 w_8_n139# 0 0.95619f **FLOATING
+C26 vdd 0 6.62369f **FLOATING

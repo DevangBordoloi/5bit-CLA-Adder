@@ -1,0 +1,35 @@
+* SPICE3 file created from pro_nand3.ext - technology: scmos
+
+.option scale=90n
+
+M1000 Y C VDD VDD CMOSP w=20u l=2u
++  ad=100p pd=50u as=60p ps=26u
+M1001 a_7_n42# A Y Gnd CMOSN w=30u l=2u
++  ad=90p pd=36u as=0.15n ps=70u
+M1002 VDD B Y VDD CMOSP w=20u l=2u
++  ad=60p pd=26u as=60p ps=26u
+M1003 a_15_n42# B a_7_n42# Gnd CMOSN w=30u l=2u
++  ad=90p pd=36u as=90p ps=36u
+M1004 Y A VDD VDD CMOSP w=20u l=2u
++  ad=60p pd=26u as=100p ps=50u
+M1005 GND C a_15_n42# Gnd CMOSN w=30u l=2u
++  ad=0.15n pd=70u as=90p ps=36u
+C0 VDD A 0.02008f
+C1 GND Y 0.05501f
+C2 VDD B 0.0197f
+C3 C GND 0.00162f
+C4 a_15_n42# Y 0
+C5 B A 0.19303f
+C6 C Y 0.00849f
+C7 Y VDD 0.72135f
+C8 C VDD 0.01936f
+C9 Y a_7_n42# 0
+C10 Y A 0.0097f
+C11 Y B 0.00914f
+C12 C B 0.19303f
+C13 GND 0 0.08523f **FLOATING
+C14 Y 0 0.19657f **FLOATING
+C15 C 0 0.15985f **FLOATING
+C16 B 0 0.09872f **FLOATING
+C17 A 0 0.15985f **FLOATING
+C18 VDD 0 1.57502f **FLOATING

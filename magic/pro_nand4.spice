@@ -1,0 +1,31 @@
+* SPICE3 file created from pro_nand4.ext - technology: scmos
+
+.option scale=90n
+
+M1001 vdd B Y vdd CMOSP w=20u l=0.18u ad=60p pd=26u as=60p ps=26u
+M1003 Y C vdd vdd CMOSP w=20u l=0.18u ad=60p pd=26u as=60p ps=26u
+M1004 Y A vdd vdd CMOSP w=20u l=0.18u ad=60p pd=26u as=100p ps=50u
+M1006 vdd D Y vdd CMOSP w=20u l=0.18u ad=100p pd=50u as=60p ps=26u
+M1007 Y A n1 Gnd CMOSN w=40u l=0.18u ad=0.12n pd=46u as=0.2n ps=90u
+M1000 n1 B n2 Gnd CMOSN w=40u l=0.18u ad=0.12n pd=46u as=0.12n ps=46u
+M1005 n2 C n3 Gnd CMOSN w=40u l=0.18u ad=0.12n pd=46u as=0.12n ps=46u
+M1002 n3 D gnd Gnd CMOSN w=40u l=0.18u ad=0.2n pd=90u as=0.12n ps=46u
+C0 gnd n3 0.3299f
+C1 Y A 0.01419f
+C2 C Y 0.01286f
+C3 vdd A 0.04523f
+C4 vdd C 0.04459f
+C5 Y B 0.01302f
+C6 D Y 0.00412f
+C7 vdd B 0.04459f
+C8 vdd D 0.04523f
+C9 gnd D 0.00319f
+C10 Y n2 0.05504f
+C11 vdd Y 0.68118f
+C12 A B 0.28904f
+C13 C B 0.28904f
+C14 n2 n3 0.3299f
+C15 n1 n2 0.3299f
+C16 Y n3 0.05501f
+C17 C D 0.28904f
+C18 Y n1 0.38495f
