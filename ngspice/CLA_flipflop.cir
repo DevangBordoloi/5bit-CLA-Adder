@@ -1,0 +1,95 @@
+.include TSMC_180nm.txt
+.include CLA.sp
+.include INV.sp
+.include NAND2.sp
+.include NAND3.sp
+.include NAND4.sp
+.include NAND5.sp
+.include NAND6.sp
+.include XOR.sp
+.include D_flipflop.sp
+.param SUPPLY = 1.8
+.param LAMBDA = 0.09u
+.global gnd vdd
+
+Vdd vdd gnd 1.8
+* Clock signal
+Vclk clk gnd PULSE (1.8 0 0 0.2ns 0.2ns 5ns 10ns)
+
+* Input Signals (a5a4a3a2a1 = 11111 && b5b4b3b2b1 = 10011 expected output ===>  c5 = 1 s5s4s3s2s1 = 10010)
+* Input Signals for A =11111 and B = 10011
+Va1 a1_in gnd pwl (0 0 0.2ns 1.8 6ns 1.8 7ns 0 ) // A1 = 1
+Va2 a2_in gnd pwl (0 0 0.2ns 1.8 6ns 1.8 7ns 0 )  // A2 = 1
+Va3 a3_in gnd pwl (0 0 0.2ns 1.8 6ns 1.8 7ns 0 ) // A3 = 1
+Va4 a4_in gnd pwl (0 0 0.2ns 1.8 6ns 1.8 7ns 0 ) // A4 = 1
+Va5 a5_in gnd pwl (0 0 0.2ns 1.8 6ns 1.8 7ns 0 ) // A5 = 1
+
+Vb1 b1_in gnd pwl (0 0 0.2ns 1.8 6ns 1.8 7ns 0 )  // B1 = 1
+Vb2 b2_in gnd pwl (0 0 0.2ns 1.8 6ns 1.8 7ns 0 )  //B2 = 1
+Vb3 b3_in gnd 0v  // B3 = 0
+Vb4 b4_in gnd 0v // B4 = 0
+Vb5 b5_in gnd pwl (0 0 0.2ns 1.8 6ns 1.8 7ns 0 ) // B5 = 1
+
+* Initial Carry Input
+Vc0 c0_in gnd 0v // Initial Carry = 0
+
+* Input Registers
+xdff_a1 a1 a1_bar a1_in clk vdd gnd D_flipflop
+xdff_a2 a2 a2_bar a2_in clk vdd gnd D_flipflop
+xdff_a3 a3 a3_bar a3_in clk vdd gnd D_flipflop
+xdff_a4 a4 a4_bar a4_in clk vdd gnd D_flipflop
+xdff_a5 a5 a5_bar a5_in clk vdd gnd D_flipflop
+
+xdff_b1 b1 b1_bar b1_in clk vdd gnd D_flipflop
+xdff_b2 b2 b2_bar b2_in clk vdd gnd D_flipflop
+xdff_b3 b3 b3_bar b3_in clk vdd gnd D_flipflop
+xdff_b4 b4 b4_bar b4_in clk vdd gnd D_flipflop
+xdff_b5 b5 b5_bar b5_in clk vdd gnd D_flipflop
+
+xdff_c0 C0 C0_bar c0_in clk vdd gnd D_flipflop
+
+* 5-bit Carry Look Ahead Adder
+Xadder C5 S5 S4 S3 S2 S1 a5 a4 a3 a2 a1 b5 b4 b3 b2 b1 vdd gnd CLA 
+
+* Output Registers
+xdff_s1 S1out S1out_bar S1 clk vdd gnd D_flipflop
+xdff_s2 S2out S2out_bar S2 clk vdd gnd D_flipflop
+xdff_s3 S3out S3out_bar S3 clk vdd gnd D_flipflop
+xdff_s4 S4out S4out_bar S4 clk vdd gnd D_flipflop
+xdff_s5 S5out S5out_bar S5 clk vdd gnd D_flipflop
+xdff_c5 C5out C5out_bar C5 clk vdd gnd D_flipflop
+.tran 0.1ns 50ns
+.control
+run
+set curplottitle= devang bordoloi-2025122003-cla-flipflop
+set hcopypscolor = 1
+
+*MEASUREMENTS 
+meas tran t_clk_q TRIG v(clk) VAL=0.9 RISE=1 TARG v(a1) VAL=0.9 CROSS=1
+meas tran t_adder_delay TRIG v(a1) VAL=0.9 CROSS=1 TARG v(C5) VAL=0.9 CROSS=1
+
+* 2. CALCULATIONS 
+
+let clk_to_q = t_clk_q
+let logic_delay = t_adder_delay
+* Estimate Setup Time (100ps for 180nm)
+let t_setup_est = 0.1n
+* Calculate Worst Case Delay and Max Frequency
+let min_period = clk_to_q + logic_delay + t_setup_est
+let max_freq_hz = 1 / min_period
+let max_freq_mhz = max_freq_hz / 1000000
+* --- 3. PLOTTING ---
+plot v(clk)
+plot v(a1) 2+v(a2) 4+v(a3) 6+v(a4) 8+v(a5)
+plot v(b1_in) 2+v(b2_in) 4+v(b3_in) 6+v(b4_in) 8+v(b5_in)
+plot v(S1out) 2+v(S2out) 4+v(S3out) 6+v(S4out) 8+v(S5out)
+plot v(C5out)
+plot v(clk) v(a1_in)
+plot v(clk) v(a1)
+print clk_to_q
+print logic_delay
+print t_setup_est
+print min_period
+print max_freq_mhz
+hardcopy fig 
+.endc

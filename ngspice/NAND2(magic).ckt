@@ -1,0 +1,35 @@
+.include TSMC_180nm.txt
+.param SUPPLY=1.8
+.param LAMBDA=0.09u
+.global gnd vdd
+.param width_P={20*LAMBDA}
+.param width_N={10*LAMBDA}
+Vdd	vdd	gnd	'SUPPLY'
+vin2 B 0 pulse 0 1.8 0ns 10p 10p 20ns 40ns
+vin1 A 0 pulse 0 1.8 0ns 10p 10p 40ns 80ns
+M1000 vdd B Y vdd CMOSP w=20u l=2u
++  ad=100p pd=50u as=60p ps=26u
+M1001 Y A vdd vdd CMOSP w=20u l=2u
++  ad=60p pd=26u as=100p ps=50u
+M1002 a_7_n38# A Y Gnd CMOSN w=20u l=2u
++  ad=60p pd=26u as=100p ps=50u
+M1003 GND B a_7_n38# Gnd CMOSN w=20u l=2u
++  ad=100p pd=50u as=60p ps=26u
+C0 Y B 0.00307f
+C1 vdd A 0.02131f
+C2 Y A 0.01083f
+C3 vdd Y 0.42179f
+C4 GND a_7_n38# 0.20619f
+C5 Y a_7_n38# 0.23369f
+C6 GND B 0.00186f
+C7 A B 0.23733f
+C8 vdd B 0.02131f
+*.dc vin 0 1.8 0.1
+.tran 0.1n 200n 
+.control
+run
+plot 4+v(Y) v(A) 2+v(B)
+set hcopypscolor = 1 
+set curplottitle= devang bordoloi-2025122003-nand2
+hardcopy fig_nand2_trans.eps v(Y) v(A) v(B)
+.endc

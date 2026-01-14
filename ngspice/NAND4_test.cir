@@ -1,0 +1,44 @@
+.include TSMC_180nm.txt
+.param SUPPLY=1.8
+.param LAMBDA=0.09u
+.global gnd vdd
+.param width_P={20*LAMBDA}
+.param width_N={10*LAMBDA}
+Vdd	vdd	gnd	'SUPPLY'
+vin1 A 0 pulse 0 1.8 0ns 1ns 1ns 40ns 80ns
+vin2 B 0 pulse 0 1.8 0ns 1ns 1ns 20ns 40ns
+vin3 C 0 pulse 0 1.8 0ns 1ns 1ns 10ns 20ns
+vin4 D 0 pulse 0 1.8 0ns 1ns 1ns 80ns 120ns
+M1 Y A Y1 gnd CMOSN W={4*width_N} L={2*LAMBDA}
++ AS={5*(4*width_N)*LAMBDA} PS={10*LAMBDA+2*(4*width_N)}
++ AD={5*(4*width_N)*LAMBDA} PD={10*LAMBDA+2*(4*width_N)}
+M2 Y1 B Y2 gnd CMOSN W={4*width_N} L={2*LAMBDA}
++ AS={5*(4*width_N)*LAMBDA} PS={10*LAMBDA+2*(4*width_N)}
++ AD={5*(4*width_N)*LAMBDA} PD={10*LAMBDA+2*(4*width_N)}
+M3 Y2 C Y3 gnd CMOSN W={4*width_N} L={2*LAMBDA}
++ AS={5*(4*width_N)*LAMBDA} PS={10*LAMBDA+2*(4*width_N)}
++ AD={5*(4*width_N)*LAMBDA} PD={10*LAMBDA+2*(4*width_N)}
+M4 Y3 D gnd gnd CMOSN W={4*width_N} L={2*LAMBDA}
++ AS={5*(4*width_N)*LAMBDA} PS={10*LAMBDA+2*(4*width_N)}
++ AD={5*(4*width_N)*LAMBDA} PD={10*LAMBDA+2*(4*width_N)}
+M5 Y A vdd vdd CMOSP W={width_P} L={2*LAMBDA}
++ AS={5*width_P*LAMBDA} PS={10*LAMBDA+2*width_P}
++ AD={5*width_P*LAMBDA} PD={10*LAMBDA+2*width_P}
+M6 Y B vdd vdd CMOSP W={width_P} L={2*LAMBDA}
++ AS={5*width_P*LAMBDA} PS={10*LAMBDA+2*width_P}
++ AD={5*width_P*LAMBDA} PD={10*LAMBDA+2*width_P}
+M7 Y C vdd vdd CMOSP W={width_P} L={2*LAMBDA}
++ AS={5*width_P*LAMBDA} PS={10*LAMBDA+2*width_P}
++ AD={5*width_P*LAMBDA} PD={10*LAMBDA+2*width_P}
+M8 Y D vdd vdd CMOSP W={width_P} L={2*LAMBDA}
++ AS={5*width_P*LAMBDA} PS={10*LAMBDA+2*width_P}
++ AD={5*width_P*LAMBDA} PD={10*LAMBDA+2*width_P}
+*.dc vin 0 1.8 0.1
+.tran 0.1n 200n 
+.control
+run
+plot 8+v(Y) v(A) 2+v(B) 4+v(C) 6+v(D)
+set hcopypscolor = 1 
+set curplottitle= devang bordoloi-2025122003-Nand_4
+hardcopy fig_nand4_trans.eps v(Y) v(A) v(B) v(C) v(D)
+.endc

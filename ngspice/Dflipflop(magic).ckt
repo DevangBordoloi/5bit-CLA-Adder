@@ -1,0 +1,97 @@
+.include TSMC_180nm.txt
+.include INV.sp
+.param SUPPLY=1.8
+.param LAMBDA=0.09u
+.global gnd vdd
+.param width_P={20*LAMBDA}
+.param width_N={10*LAMBDA}
+Vdd	vdd	gnd	'SUPPLY'
+Vclk clk gnd PULSE (1.8 0 0 0.2ns 0.2ns 5ns 10ns)
+Vd D gnd pwl(0 0 12n 0 12.1n 1.8 32n 1.8 32.1n 0 60n 0)
+M1000 a_n77_4# D vdd w_n93_n3# CMOSP w=30u l=0.18u
++  ad=84p pd=34u as=0.14n ps=66u
+M1001 vdd clk a_n16_1# w_n32_n5# CMOSP w=30u l=0.18u
++  ad=0.14n pd=66u as=84p ps=34u
+M1002 a_38_17# a_n24_n50# vdd w_22_7# CMOSP w=30u l=0.18u
++  ad=0.15n pd=70u as=0.15n ps=70u
+M1003 gnd clk a_n16_n50# Gnd CMOSN w=20u l=0.18u
++  ad=0.105n pd=52u as=63p ps=27u
+M1004 Q a_38_17# vdd w_74_1# CMOSP w=20u l=0.18u
++  ad=0.105n pd=52u as=0.105n ps=52u
+M1005 gnd D a_n84_n34# Gnd CMOSN w=10u l=0.18u
++  ad=50p pd=30u as=50p ps=30u
+M1006 Q a_38_17# gnd Gnd CMOSN w=10u l=0.18u
++  ad=60p pd=32u as=60p ps=32u
+M1007 a_n16_n50# a_n84_n34# a_n24_n50# Gnd CMOSN w=20u l=0.18u
++  ad=63p pd=27u as=0.126n ps=54u
+M1008 a_38_n23# a_n24_n50# gnd Gnd CMOSN w=20u l=0.18u
++  ad=60p pd=26u as=0.12n ps=52u
+M1009 a_n84_n34# clk a_n77_4# w_n93_n3# CMOSP w=30u l=0.18u
++  ad=0.14n pd=66u as=84p ps=34u
+M1010 a_n16_1# a_n84_n34# a_n24_n50# w_n32_n5# CMOSP w=30u l=0.18u
++  ad=84p pd=34u as=0.14n ps=66u
+M1011 a_38_17# clk a_38_n23# Gnd CMOSN w=20u l=0.18u
++  ad=100p pd=50u as=60p ps=26u
+C0 w_74_1# a_38_17# 0.0191f
+C1 Q a_38_17# 0.0591f
+C2 D w_n93_n3# 0.0261f
+C3 gnd a_n16_n50# 0.24952f
+C4 w_n93_n3# vdd 0.02251f
+C5 clk w_22_7# 0.09843f
+C6 D vdd 0.00223f
+C7 a_38_n23# a_38_17# 0.20619f
+C8 a_n24_n50# vdd 0.07479f
+C9 a_38_17# w_22_7# 0.01371f
+C10 a_n24_n50# a_n16_1# 0.28867f
+C11 a_n16_1# vdd 0.28898f
+C12 a_n77_4# vdd 0.28921f
+C13 a_n84_n34# w_n93_n3# 0.00924f
+C14 D gnd 0
+C15 clk w_n93_n3# 0.0261f
+C16 a_n84_n34# D 0.00905f
+C17 D clk 0.24458f
+C18 a_n24_n50# gnd 0.03399f
+C19 a_n84_n34# a_n24_n50# 0.01374f
+C20 a_n24_n50# clk 0.67258f
+C21 a_n84_n34# vdd 0.00879f
+C22 clk vdd 0.00502f
+C23 w_74_1# vdd 0.00999f
+C24 Q vdd 0.24007f
+C25 a_n24_n50# w_n32_n5# 0.00896f
+C26 w_n32_n5# vdd 0.02299f
+C27 a_38_17# vdd 0.33453f
+C28 a_n84_n34# a_n77_4# 0.28867f
+C29 a_n24_n50# a_n16_n50# 0.1732f
+C30 a_n84_n34# gnd 0.13149f
+C31 clk gnd 0.00186f
+C32 a_n24_n50# w_22_7# 0.0441f
+C33 w_22_7# vdd 0.0312f
+C34 a_n84_n34# clk 0.30372f
+C35 gnd Q 0.12667f
+C36 a_n84_n34# w_n32_n5# 0.02676f
+C37 Q w_74_1# 0.00815f
+C38 clk w_n32_n5# 0.0261f
+C39 gnd a_38_17# 0.04056f
+C40 gnd a_38_n23# 0.16495f
+C41 clk a_38_17# 0.01442f
+C51 D 0 0.29161f 
+.tran 0.1n 200n 
+.measure tran tsetup
++ TRIG v(D) VAL = 'SUPPLY/2' RISE = 1
++ TARG v(a_n24_n50#) VAL = 'SUPPLY/2' FALL = 1
+.measure tran tpcq
++ TRIG v(clk) VAL = 'SUPPLY/2' RISE = 2
++ TARG v(Q) VAL = 'SUPPLY/2' RISE = 1
+.measure tran thold 
++ TRIG v(clk) VAL = 'SUPPLY/2' RISE = 2 
++ TARG v(D)   VAL = 'SUPPLY/2' FALL = 1
+.control
+run
+plot v(clk) 2+v(D) 4+v(Q)
+* plot T_CQ
+* print all 
+set hcopypscolor = 1 
+set curplottitle= devang bordoloi-2025122003-dff
+hardcopy fig_dff_trans.eps v(clk) v(D) v(Q)
+.endc
+.end

@@ -1,0 +1,31 @@
+.include TSMC_180nm.txt
+.param SUPPLY=1.8
+.param LAMBDA=0.09u
+.global gnd vdd
+.param width_P={20*LAMBDA}
+.param width_N={10*LAMBDA}
+Vdd	vdd	gnd	'SUPPLY'
+Vin1 A gnd pulse(0 1.8 0ns 100ps 100ps 20ns 40ns)
+Vin2 B gnd pulse(0 1.8 0ns 100ps 100ps 10ns 20ns)
+M1 Y A Y1 gnd CMOSN W={2*width_N} L={2*LAMBDA}
++ AS={5*(2*width_N)*LAMBDA} PS={10*LAMBDA+2*(2*width_N)}
++ AD={5*(2*width_N)*LAMBDA} PD={10*LAMBDA+2*(2*width_N)}
+M2 Y1 B gnd gnd CMOSN W={2*width_N} L={2*LAMBDA}
++ AS={5*(2*width_N)*LAMBDA} PS={10*LAMBDA+2*(2*width_N)}
++ AD={5*(2*width_N)*LAMBDA} PD={10*LAMBDA+2*(2*width_N)}
+
+M3 Y A vdd vdd CMOSP W={width_P} L={2*LAMBDA}
++ AS={5*width_P*LAMBDA} PS={10*LAMBDA+2*width_P}
++ AD={5*width_P*LAMBDA} PD={10*LAMBDA+2*width_P}
+M4 Y B vdd vdd CMOSP W={width_P} L={2*LAMBDA}
++ AS={5*width_P*LAMBDA} PS={10*LAMBDA+2*width_P}
++ AD={5*width_P*LAMBDA} PD={10*LAMBDA+2*width_P}
+*.dc vin 0 1.8 0.1
+.tran 0.1n 200n 
+.control
+run
+plot 4+v(Y) v(A) 2+v(B)
+set hcopypscolor = 1 
+set curplottitle= devang bordoloi-2025122003-nand2
+hardcopy fig_nand2_trans.eps v(Y) v(A) v(B)
+.endc

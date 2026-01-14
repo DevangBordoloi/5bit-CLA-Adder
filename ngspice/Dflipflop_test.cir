@@ -1,0 +1,61 @@
+.include TSMC_180nm.txt
+.include INV.sp
+.param SUPPLY=1.8
+.param LAMBDA=0.09u
+.global gnd vdd
+.param width_P={20*LAMBDA}
+.param width_N={10*LAMBDA}
+Vdd	vdd	gnd	'SUPPLY'
+Vclk clk gnd PULSE (1.8 0 0 0.2ns 0.2ns 5ns 10ns)
+Vd D gnd pwl(0 0 12n 0 12.1n 1.8 32n 1.8 32.1n 0 60n 0)
+M3 l1 D vdd vdd CMOSP W={Width_P} L={2*LAMBDA}
++ AS={5*Width_P*LAMBDA} PS={10*LAMBDA+2*Width_P}
++ AD={5*Width_P*LAMBDA} PD={10*LAMBDA+2*Width_P}
+M2 X clk l1 vdd CMOSP W={Width_P} L={2*LAMBDA}
++ AS={5*Width_P*LAMBDA} PS={10*LAMBDA+2*Width_P}
++ AD={5*Width_P*LAMBDA} PD={10*LAMBDA+2*Width_P}
+M1 X D gnd gnd CMOSN W={Width_N} L={2*LAMBDA}
++ AS={5*Width_N*LAMBDA} PS={10*LAMBDA+2*Width_N}
++ AD={5*Width_N*LAMBDA} PD={10*LAMBDA+2*Width_N}
+
+M6 Y clk vdd vdd CMOSP W={Width_P} L={2*LAMBDA}
++ AS={5*Width_P*LAMBDA} PS={10*LAMBDA+2*Width_P}
++ AD={5*Width_P*LAMBDA} PD={10*LAMBDA+2*Width_P}
+M5 Y X l2 gnd CMOSN W={Width_N} L={2*LAMBDA}
++ AS={5*Width_N*LAMBDA} PS={10*LAMBDA+2*Width_N}
++ AD={5*Width_N*LAMBDA} PD={10*LAMBDA+2*Width_N}
+M4 l2 clk gnd gnd CMOSN W={Width_N} L={2*LAMBDA}
++ AS={5*Width_N*LAMBDA} PS={10*LAMBDA+2*Width_N}
++ AD={5*Width_N*LAMBDA} PD={10*LAMBDA+2*Width_N}
+
+M9 Q_bar Y vdd vdd CMOSP W={Width_P} L={2*LAMBDA}
++ AS={5*Width_P*LAMBDA} PS={10*LAMBDA+2*Width_P}
++ AD={5*Width_P*LAMBDA} PD={10*LAMBDA+2*Width_P}
+M8 Q_bar clk l3 gnd CMOSN W={Width_N} L={2*LAMBDA}
++ AS={5*Width_N*LAMBDA} PS={10*LAMBDA+2*Width_N}
++ AD={5*Width_N*LAMBDA} PD={10*LAMBDA+2*Width_N}
+M7 l3 Y gnd gnd CMOSN W={Width_N} L={2*LAMBDA}
++ AS={5*Width_N*LAMBDA} PS={10*LAMBDA+2*Width_N}
++ AD={5*Width_N*LAMBDA} PD={10*LAMBDA+2*Width_N}
+
+x1 Q Q_bar vdd gnd inv
+.tran 0.1n 200n 
+.measure tran tsetup
++ TRIG v(D) VAL = 'SUPPLY/2' RISE = 1
++ TARG v(X) VAL = 'SUPPLY/2' FALL = 1
+.measure tran tpcq
++ TRIG v(clk) VAL = 'SUPPLY/2' RISE = 2
++ TARG v(Q) VAL = 'SUPPLY/2' RISE = 1
+.measure tran thold 
++ TRIG v(clk) VAL = 'SUPPLY/2' RISE = 2 
++ TARG v(D)   VAL = 'SUPPLY/2' FALL = 1
+.control
+run
+plot v(clk) 2+v(D) 4+v(Q)
+* plot T_CQ
+* print all 
+set hcopypscolor = 1 
+set curplottitle= devang bordoloi-2025122003-dff
+hardcopy fig_dff_trans.eps v(clk) v(D) v(Q)
+.endc
+.end

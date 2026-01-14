@@ -1,0 +1,64 @@
+.include TSMC_180nm.txt
+.include INV.sp
+.param SUPPLY=1.8
+.param LAMBDA=0.09u
+.global gnd vdd
+.param width_P={20*LAMBDA}
+.param width_N={10*LAMBDA}
+Vdd	vdd	gnd	'SUPPLY'
+Vin1 A gnd pulse(0 1.8 0ns 10ps 10ps 20ns 40ns)
+Vin2 B gnd pulse(0 1.8 0ns 10ps 10ps 10ns 20ns)
+M1000 a_23_0# a_20_n75# Y vdd CMOSP w=20u l=0.18u
++  ad=0.12n pd=46u as=0.12n ps=46u
+M1001 a_20_n75# A gnd Gnd CMOSN w=20u l=0.18u
++  ad=60p pd=32u as=60p ps=32u
+M1002 vdd B gnd Gnd CMOSN w=20u l=0.18u
++  ad=60p pd=32u as=60p ps=32u
+M1003 a_23_n49# a_20_n75# gnd Gnd CMOSN w=20u l=0.18u
++  ad=60p pd=26u as=60p ps=26u
+M1004 Y B a_7_0# vdd CMOSP w=20u l=0.18u
++  ad=0.12n pd=46u as=0.12n ps=46u
+M1005 a_7_0# A vdd vdd CMOSP w=20u l=0.18u
++  ad=0.12n pd=46u as=0.2n ps=90u
+M1006 vdd vdd a_23_0# vdd CMOSP w=20u l=0.18u
++  ad=0.2n pd=90u as=0.12n ps=46u
+M1007 Y vdd a_23_n49# Gnd CMOSN w=20u l=0.18u
++  ad=100p pd=50u as=60p ps=26u
+M1008 a_7_n49# A Y Gnd CMOSN w=20u l=0.18u
++  ad=60p pd=26u as=100p ps=50u
+** SOURCE/DRAIN TIED
+M1009 vdd B vdd w_76_n136# CMOSP w=20u l=0.18u
++  ad=0.105n pd=52u as=0.715n ps=0.336m
+M1010 gnd B a_7_n49# Gnd CMOSN w=20u l=0.18u
++  ad=60p pd=26u as=60p ps=26u
+M1011 a_20_n75# A vdd w_8_n139# CMOSP w=20u l=0.18u
++  ad=0.105n pd=52u as=0.105n ps=52u
+C0 a_20_n75# vdd 0.76662f
+C1 B w_76_n136# 0.0191f
+C2 a_20_n75# w_8_n139# 0.00815f
+C3 B gnd 0.04651f
+C4 B A 0.41597f
+C5 Y vdd 0.01971f
+C6 a_20_n75# gnd 0.1734f
+C7 a_20_n75# A 0.0591f
+C8 vdd w_8_n139# 0.00999f
+C9 vdd w_76_n136# 0.01747f
+C10 gnd vdd 0.22971f
+C11 Y A 0.0097f
+C12 vdd A 0.11025f
+C13 B a_20_n75# 0.96795f
+C14 w_8_n139# A 0.0191f
+C15 gnd A 0.04279f
+C16 B Y 0.01156f
+C17 B vdd 0.30531f
+C18 a_20_n75# Y 0.01156f
+*.dc vin 0 1.8 0.1
+.tran 0.1n 200n 
+Cout Y gnd 100f
+.control
+run
+plot 4+v(Y) v(A) 2+v(B)
+set hcopypscolor = 1 
+set curplottitle= devang bordoloi-2025122003-xor2
+hardcopy fig_nand2_trans.eps v(Y) v(A) v(B)
+.endc

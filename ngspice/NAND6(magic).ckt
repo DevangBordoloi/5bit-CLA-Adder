@@ -1,0 +1,76 @@
+.include TSMC_180nm.txt
+.param SUPPLY=1.8
+.param LAMBDA=0.09u
+.global gnd vdd
+.param width_P={20*LAMBDA}
+.param width_N={10*LAMBDA}
+Vdd	vdd	gnd	'SUPPLY'
+vin3 A 0 pulse 0 1.8 0ns 10p 10p 10ns 20ns
+vin2 B 0 pulse 0 1.8 0ns 10p 10p 20ns 40ns
+vin1 C 0 pulse 0 1.8 0ns 10p 10p 40ns 80ns
+vin4 D 0 pulse 0 1.8 0ns 10p 10p 80ns 120ns
+vin5 E 0 pulse 0 1.8 0ns 10p 10p 120ns 160ns
+vin6 F 0 pulse 0 1.8 0ns 10p 10p 160ns 200ns
+M1000 Y C vdd vdd CMOSP w=20u l=0.18u
++  ad=60p pd=26u as=60p ps=26u
+M1001 a_39_n103# E a_31_n103# Gnd CMOSN w=60u l=0.18u
++  ad=0.18n pd=66u as=0.18n ps=66u
+M1002 Y E vdd vdd CMOSP w=20u l=0.18u
++  ad=60p pd=26u as=60p ps=26u
+M1003 a_47_n103# F a_39_n103# Gnd CMOSN w=60u l=0.18u
++  ad=0.3n pd=0.13m as=0.18n ps=66u
+M1004 vdd B Y vdd CMOSP w=20u l=0.18u
++  ad=60p pd=26u as=60p ps=26u
+M1005 Y A vdd vdd CMOSP w=20u l=0.18u
++  ad=60p pd=26u as=100p ps=50u
+M1006 vdd D Y vdd CMOSP w=20u l=0.18u
++  ad=60p pd=26u as=60p ps=26u
+M1007 a_15_n103# B a_7_n103# Gnd CMOSN w=60u l=0.18u
++  ad=0.18n pd=66u as=0.18n ps=66u
+M1008 vdd F Y vdd CMOSP w=20u l=0.18u
++  ad=100p pd=50u as=60p ps=26u
+M1009 a_7_n103# A Y Gnd CMOSN w=60u l=0.18u
++  ad=0.18n pd=66u as=0.3n ps=0.13m
+M1010 a_31_n103# D a_23_n103# Gnd CMOSN w=60u l=0.18u
++  ad=0.18n pd=66u as=0.18n ps=66u
+M1011 a_23_n103# C a_15_n103# Gnd CMOSN w=60u l=0.18u
++  ad=0.18n pd=66u as=0.18n ps=66u
+C0 Y a_31_n103# 0.04128f
+C1 a_15_n103# a_23_n103# 0.61857f
+C2 Y a_39_n103# 0.04128f
+C3 D E 0.34207f
+C4 D vdd 0.03475f
+C5 E vdd 0.03475f
+C6 F a_47_n103# 0.00218f
+C7 a_23_n103# a_31_n103# 0.61857f
+C8 D Y 0.01592f
+C9 E F 0.34207f
+C10 F vdd 0.03548f
+C11 vdd A 0.03548f
+C12 Y a_47_n103# 0.04126f
+C13 E Y 0.01592f
+C14 Y vdd 1.28437f
+C15 D C 0.34207f
+C16 vdd B 0.03475f
+C17 a_31_n103# a_39_n103# 0.61857f
+C18 F Y 0.01592f
+C19 Y A 0.01721f
+C20 A B 0.34207f
+C21 vdd C 0.03475f
+C22 Y B 0.01592f
+C23 Y a_7_n103# 0.65985f
+C24 Y C 0.01592f
+C25 B C 0.34207f
+C26 Y a_15_n103# 0.04128f
+C27 a_39_n103# a_47_n103# 0.61857f
+C28 a_7_n103# a_15_n103# 0.61857f
+C29 Y a_23_n103# 0.04128f
+*.dc vin 0 1.8 0.1
+.tran 0.1n 200n 
+.control
+run
+plot 12+v(Y) v(A) 2+v(B) 4+v(C) 6+v(D) 8+v(E) 10+v(F)
+set hcopypscolor = 1 
+set curplottitle= devang bordoloi-2025122003-nand6
+hardcopy fig_nand6_trans.eps v(Y) v(A) v(B) v(C) v(D) v(E) v(F)
+.endc
